@@ -1,0 +1,218 @@
+Data Cleaning, Validation and Standardization (Opportunity Wise Data).
+
+The Data has 21 columns and 20322 rows. I started by converting the data into a table, this adds filters to all the columns, to help me further examine them since there are majorly categorical columns.
+
+1. The Profile ID is an alphanumeric Unique Identifier for each learner who has engaged with specific opportunities on Excelerate. Users can register for multiple Opportunities, this implies that there can be multiple instances of a particular Profile ID if the user registers/applies for multiple Opportunities.
+
+2. Opportunity Id as the name implies, is an alphanumeric Identifier for each opportunity on the Excelerate platform. There are 33 Different Opportunities, which explains the reason for the 33 unique Opportunity IDs. This column is not seen by the user while filling out the form, rather, the mapping is done on the backend based on the opportunity name selected.
+
+00000000-0G4F-19XB-EXPW-KS8F3N
+00000000-0GT8-HCVB-01AE-6QEP8Y
+00000000-0GN2-A0AY-7XK8-C5FZPP
+00000000-0GHG-N3NG-584M-44MK40
+00000000-0GNT-FT74-MZT8-93VC0G
+00000000-0GRA-BD28-CXVV-EYEX21
+00000000-0GZY-NNHV-FJWW-PTA9VX
+00000000-0GHB-4N83-QX9K-JM48K2
+00000000-0GWQ-AXC5-X45C-2MHJ28
+00000000-10EY-Y8NM-6HJ1-2D6SR5
+00000000-10WC-BS50-CYGD-X97ES4
+00000000-10W6-XK8N-TCH8-9Z3E4K
+00000000-108K-F6CF-BE1S-0JHYYG
+00000000-10DC-SM71-JHK7-WD6F3R
+00000000-109Z-0S9F-T3TZ-W0JCBH
+00000000-102K-VCRY-DH80-6VMN7E
+00000000-10XE-QWX2-NWER-3XJ2H6
+00000000-1098-KY7B-ZFZ4-3NAVFX
+00000000-10S9-2PZ9-0FF3-3Z8QA5
+00000000-10SQ-MBTQ-ETF8-YK4RB6
+00000000-107Q-A346-MCS2-D7FE69
+00000000-104G-3FS6-3SV3-JKHVQB
+00000000-10WW-X340-GTVH-RR52VF
+00000000-10QW-PYTT-CJCX-7VQBTT
+00000000-10YM-B80K-RNNJ-YAVQ7V
+00000000-109X-S2QM-YJSV-W5JRD8
+00000000-10S6-HVRK-ZDAM-90C0F8
+00000000-10QD-A2PJ-WBHR-84XNKH
+00000000-10T6-29FT-S86Z-2VDCMG
+00000000-100B-RZP6-S5NA-4Y05G3
+00000000-10DV-FPHZ-H5RB-WPYV84
+00000000-108Y-17ZT-1010-B6779Z
+00000000-101Y-HSX2-0DFJ-QCKQBR
+
+
+3. Just like the Opportunity ID column, the Opportunity name column has 33 unique opportunity names. As this is a mandatory and validated column, there were no incorrect, incomplete or missing values in this column.
+
+Statement of Purpose (SOP) Writing Workshop
+Life Beyond Saint Louis University's Campus
+Career Essentials: Getting Started with Your Professional Journey
+Slide Geeks: A Presentation Design Competition
+Digital Marketing
+Health Care Management
+Innovation & Entrepreneurship
+Project Management
+Data Visualization
+Linked Up: The LinkedIn Makeover Workshop
+CPR/AED Certification
+Digital Palette: A Global T-shirt Design Competition
+Mental Health First Aid Workshop
+Epidemiology Training Internship
+Million Dollar Idea
+Cook a Tale
+Resume Booster Workshop
+The Brand Booster Challenge
+Changemakers Challenge
+Cracking the Interview Code Workshop
+Money Matters: A Personal Finance Workshop
+Mental and Physical Health Session
+Jump Start: Developing your Emotional Intelligence
+Join a Student Organisation
+Upload Your First Year Transcript
+Empowered: A Mindfulness and Emotional Intelligence Workshop
+Startup Mastery Workshop
+Crafting Your Personal Brand Workshop
+Leadership Launchpad
+Verses: A Poetry Writing Competition
+Info Innovators Challenge: An Infographic Design Contest
+Lens Masters: A Photography Contest
+AI Ethics Challenge
+
+4. The Opportunity Category column is the column that takes in the value of the category of experience the user participated in. As this is a mandatory and validated column, there were no incorrect, incomplete, or missing values in this column.
+
+Event
+Course
+Competition
+Internship
+Engagement
+
+
+5. The Opportunity End date column is a datetime column that stores the date and time of the end date of the user's program, be it an internship or a course. An example of the date format is "Jan 05, 2023, 18:58:39", which appears to follow a common human-readable format where the month is represented by its three-letter abbreviation ("Jan" for January), followed by the day of the month, the year, and then the time in hours, minutes, and seconds. As this is a column that filled automatically, there were no incorrect, incomplete, or missing values in this column.
+
+To standardize this format for data analysis or visualization in tools like Power BI, it's recommended to convert it to a format that is recognized universally and can be easily interpreted by different systems. The ISO 8601 format is a suitable choice for this purpose.
+The equivalent ISO 8601 format for the provided date and time would be:
+
+"2023-01-05T18:58:39"
+
+However, I decided to extract just the date from this column, without the time because:
+a. There is no specific timezone provided for the time.
+b. This analysis does not involve any form of time series analysis or forecasting. 
+
+I made use of this Excel function to extract the date:
+=TEXT(DATE(MID(A1, 9, 4), VLOOKUP(MID(A1, 1, 3), {"Jan",1;"Feb",2;"Mar",3;"Apr",4;"May",5;"Jun",6;"Jul",7;"Aug",8;"Sep",9;"Oct",10;"Nov",11;"Dec",12}, 2, FALSE), MID(A1, 5, 2)), "yyyy-mm-dd")
+
+6. The Gender column is a categorical column that has 4 unique values:
+
+Male
+Female
+Don't want to specify
+Other
+
+There was a missing value in the gender column as well (row: 15841). It is not advisable to fill in the missing value because there is no name field that can give a pointer as to what to fill it with, I checked and found out that other significant fields were missing for that observation too like the Graduation Date(YYYY MM), Current Student Status, and Current/Intended Major. I decided to drop that row.
+
+7. The City column, also a categorical column, had a lot of inconsistencies, typos, and abbreviations. The reason was that the users were allowed to enter their cities without that field being validated. As a measure to handle the inconsistencies and incorrect entries, I made use of the Excel Proper function (=PROPER()) to convert all the entries to proper case and made use of the Trim function (=TRIM()) to strip the values of any unwanted extra white spaces. I made use of Find and Replace functions to find and replace misspelled or abbreviated spellings of cities.
+I made use of the filter to examine the categories and tried to ensure correctness in most of the fields but not all as the dataset is quite large (over 20000 rows) and the unique instances of cites after cleaning the column are over 2000, which is a very large number of categories to work with. I did not spend much time on the column because there won't a way to visualize the column. Since it is a mandatory column, some users just typed gibberish
+and there was no way to know the exact city, so I replaced such values with "Unknown".
+
+8. The State column with over 900 unique states, had the same issues with the City Column and I made use of the same approach to try and solve them.
+
+9. The Country Column, on the other hand, did not have an issue with inconsistencies because it was pre-validated on the form. The are 104 unique categories of countries in the dataset. I made use of them to cross-reference and check most of the entries of the City and State columns to see if they were correct. It helps me identify some fields with inconsistent and incorrect values in the City and State column.
+
+9. I suggest that the Zip Code column be dropped. This is because there were so many inconsistencies and incorrect entries in the column. with over 2500 cities in the dataset, that's how many unique zip codes we would have because each city has its own zip code. Another reason why I suggest that the column be dropped is that it would not be helpful for our analysis.
+When working with zip code data, it's important to consider potential challenges, such as variations in data quality, the need for geocoding to convert zip codes into geographic coordinates, and ensuring that analyses respect privacy regulations and ethical considerations. 
+The format and standards for ZIP codes (postal codes) vary by country. In the United States, ZIP codes follow a specific format, while other countries may have their own standards.
+
+United States:
+In the United States, a ZIP code (which stands for "Zone Improvement Plan") consists of five digits. An extended version, called ZIP+4, includes an additional four digits separated by a hyphen. The general formats are:
+
+ZIP Code: 12345
+ZIP+4 Code: 12345-6789
+The first three digits of the ZIP code represent a sectional center facility (SCF), which is a central mail processing facility. The fourth and fifth digits narrow down the delivery area.
+
+Other Countries:
+In other countries, postal code formats and standards vary. For example:
+
+Canada: Postal codes are alphanumeric and follow the format "A1A 1A1."
+United Kingdom: Postal codes can take various formats, such as "SW1A 1AA" or "SW1A 1AAA."
+Australia: Australian postal codes are numeric and typically consist of four digits.
+It's crucial to use the correct format for the country in which the data is collected or analyzed. When working with ZIP codes, especially in data analysis or software applications, it's essential to validate and store them in accordance with the relevant standards to ensure accuracy and consistency.
+
+Nigeria:
+In Nigeria, the postal code system is numeric. Nigerian postal codes are six digits long. While they are primarily used for sorting and delivering mail, the codes may not always correspond to specific geographic regions in the same way as ZIP codes in the United States.
+
+For example:
+
+Lagos Mainland: 100001
+Abuja Central Area: 900001
+It's important to note that the postal code system in Nigeria may not always follow strict geographic patterns, and in some cases, the codes may be assigned to specific organizations or locations within a city.
+
+India:
+In India, the postal code system is known as PIN (Postal Index Number) code. Indian PIN codes are six digits long. The PIN code system is designed to simplify the sorting of mail by eliminating confusion over incorrect addresses and similar-sounding area names.
+
+The format of a PIN code is like this:
+
+Standard Format: 110001
+The first digit of the PIN code represents the region, the second digit represents the sub-region, and the third digit represents the specific district. The last three digits are used to uniquely identify individual post offices within the district.
+
+
+Reasons for Dropping the Zip Code Column
+High Level of Inconsistency
+The Zip code column exhibits an exceptionally high level of inconsistency, making it challenging to standardize the entries or correct errors effectively.
+
+Limited Value for Analysis
+The Zip code column contains numerous inaccuracies, and the analysis being performed does not heavily rely on or require precise location information. In such cases, dropping the column may not significantly impact the insights gained from the analysis.
+
+Incomplete or Missing Data
+A substantial portion of the Zip code column contains missing or incomplete entries, making it difficult to reliably use this information for analysis or visualization.
+
+Data Quality Concerns:
+The overall data quality of the Zip code column is questionable, and the potential impact of using inaccurate or inconsistent location data outweighs the benefits.
+
+Alternative Sources of Location Information:
+Other columns in the dataset, such as Country and State, provide more reliable and standardized location information. These alternative columns can serve the analysis requirements more effectively.
+
+
+10. The Graduation Date column just stores the date (Year and Month) of the graduation for each participant. There were no issues with this column as it was filled automatically from the backend.
+
+11. The Current Student Status column is pre-validated and as such, there were no issues with missing values, inconsistencies, and incorrect entries. There are 4 categories in this column.
+
+Undergraduate Student
+High School Student
+Graduate Program Student
+Not in Education
+
+
+11. The Current/Intended Major column had the same inconsistencies as the City column.It The City column, also a categorical column, had a lot of inconsistencies, typos, and abbreviations. The reason was that the users were allowed to enter their cities without that field being validated. As a measure to handle the inconsistencies and incorrect entries, I made use of the Excel Proper function (=PROPER()) to convert all the entries to proper case and made use of the Trim function (=TRIM()) to strip the values of any unwanted extra white spaces. I made use of Find and Replace functions to find and replace misspelled or abbreviated spellings of cities.
+I made use of the filter to examine the categories and tried to ensure correctness in most of the fields but not all as the dataset is quite large (over 20000 rows) and the unique instances after cleaning the column are over 2000, which is a very large number of categories to work with. Since the column was intended to take values from participants about the major they are currently pursuing or would want to pursue, there were some incorrect entries like "WAEC, SSCE, Student, NYSC, No" and the like. I grouped all these wrong entries under the "Unknown Category".
+
+
+12. The Status Description column tells the status of each participant's application at the moment. This column is pre-validated and as such, there were no issues with missing values, inconsistencies, and incorrect entries. There are 8 categories in this column:
+
+Not Started
+Rewards Award
+Team Allocated
+Started
+Withdraw
+Dropped Out
+Rejected
+Applied
+
+
+13. Apply Date column has values similar to the Opportunity End Date column and I they had the same issues. I handled this column the same way I handled the Opportunity End Date column.
+
+14. The Opportunity Start Date column has values similar to the Opportunity End Date column and they have the same issues. I handled this column the same way I handled the Opportunity End Date column. However, there were a lot of missing values in this column and I cross reference them with the Status Description and I found out that a majotity of these participants were either Rejected, Dropped Out or Withdrawn. A very small percentage of those without a Start Date had a status of Team Allocated, Rewards Awarded,  and Applied. This might be due to improper data collection. I filled the missing values with an arbitrary date (2050-01-01).
+
+
+15. The Reward Amount column contained the value of the cash reward awarded to participants who did well in their program. The value of the column ranged from 50 - 2500. There were a lot of missing values because not everyone met the requirements to be awarded the reward. I replaced the missing values with -1 for participants with status descriptions of Withdraw, Dropped Out, and Rejected. For participants in other status description category, I replaced the missing value of Reward Amount with 0. For any participant with a Reward amount of 0, there was no Badge Id, Badge Name, Skill Points Earned and Skills Earned recorded for them.
+
+
+16. The Badge Id is an alphanumeric unique identifier for each badge issued. Ecah batch name is given the specific Badge ID, this explains the repetition in Badge ID because some participants received the same type of badge. This column had missing values, for any participant with no Badge ID recorded, there was no Reward amount, Badge Name, Skill Points Earned and Skills Earned recorded for them. I replaced the missing values with "Null" for participants with status descriptions of Withdraw, Dropped Out, and Rejected. For participants in other status description categories, I replaced the missing value of Badge ID with "Unknown". I repeated the same steps for the Badge Name, Skill Points Earned and Skills Earned columns.
+
+
+17. The Badge Name column has the same values as the Opportunity Category column as participants are given badges for the Opportunity Category they chose. I replaced the missing values with "Null" for participants with status descriptions of Withdraw, Dropped Out, and Rejected. For participants in other status desctiption category, I replaced the missing value of Badge Name with "Unknown".
+
+18. Skill Points Earned range from 10 to 1776. It had missing values which I replaced with -1 for participants with status descriptions of Withdraw, Dropped Out, and Rejected. For participants in other status description categories, I replaced the missing value of Skill Points Earned with 0.
+
+19. The Skills Earned column stores a list of different skill the participants selected and skills they aquired during their program at Excelerate. E.g. ["Creative Thinking","Technology Literacy","Initiative","Career Readiness"]. I replaced the missing values with "Null" for participants with status descriptions of Withdraw, Dropped Out, and Rejected. For participants in other status description categories, I replaced the missing value of Skills Earned with "Unknown".
+
+
+In all, there were 2 numerical columns, 3 date columns, the Zip Code column and 15 categorical columns. which brings us back to a total of  21 columns.

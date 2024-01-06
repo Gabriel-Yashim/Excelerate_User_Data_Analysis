@@ -1,0 +1,8 @@
+Your task for Week 2 is to create a wireframe for the upcoming dashboard. The wireframe should be a visual representation of the key components, headings, and graphs that will be included in the final dashboard. 
+
+Keep in mind the questions the dashboard aims to answer, the preprocessing steps conducted on the dataset, and the potential components of trend and comparative analysis.
+
+Submit a clear image or document containing your hand-drawn or presentation-style wireframe.
+Include annotations explaining the purpose of each component and its alignment with the questions and analysis objectives.
+
+This wireframe is a crucial step toward visualizing the structure of the dashboard and ensuring that it effectively communicates insights derived from the datasets. It serves as a guide for the subsequent stages of dashboard development and analysis.

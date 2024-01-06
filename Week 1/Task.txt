@@ -1,0 +1,11 @@
+By the end of week 1, your team's primary deliverable is to create a comprehensive Exploratory Data Analysis (EDA) report of the provided datasets—User Data and Opportunity Sign Up and Completion Data. Your findings will set the stage for subsequent data processing and visualization.
+
+In order to accomplish it you need to: 
+
+1. Conduct an initial dataset review using descriptive statistics and visualizations to identify and address missing values, ensuring data integrity.
+
+2. Validate and clean categorical variables, handling missing values to guarantee dataset completeness and accuracy. Collaborate with the team to create a well-documented cleaning process, ensuring transparency and consistency.
+
+3. Generated an EDA report summarizing key dataset features through statistical methods and visualizations. Extract valuable insights, laying the foundation for informed decision-making in subsequent dashboard development stages
+
+Remember that your EDA report is essential to showcase your progress and findings. It will serve as a foundation for the more advanced visualization tasks in the coming weeks. Ensure that you document your processes, findings, and any challenges you encounter. By completing this task successfully, you'll contribute to Excelerate's goal of enhancing user insights and improving the overall user experience.  

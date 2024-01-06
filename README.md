@@ -12,4 +12,5 @@ The Deliverables for the Internship are turned-in on a weekly basis, making it f
 
 <li>Week 4: Showcase the Project Presentation featuring the final interactive dashboard.</li>
 
+<br>
 This repository containes the tasks, dataset and solution for each week. The folders are labelled week 1 - week 4.
